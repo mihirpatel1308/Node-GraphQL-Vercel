@@ -48,12 +48,12 @@ mongoose
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("*", cors());
+app.use("*", cors({ origin: ["http://localhost:4200/users"] }));
 app.use("/", indexRouter);
 app.use("/books", bookRouter);
 app.use(
   "/graphql",
-  cors(),
+  cors({ origin: ["http://localhost:4200/users"] }),
   graphqlHTTP({
     schema: schema,
     rootValue: global,
