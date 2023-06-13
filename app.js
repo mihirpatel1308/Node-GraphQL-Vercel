@@ -14,25 +14,25 @@ var mongoose = require("mongoose");
 
 var app = express();
 
-// dotenv.config({ path: "./config.env" });
+dotenv.config({ path: "./config.env" });
 
-// const DB = process.env.DATABASE.replace(
-//   "<PASSWORD>",
-//   process.env.DATABASE_PASSWORD
-// );
+const DB = process.env.DATABASE.replace(
+  "<PASSWORD>",
+  process.env.DATABASE_PASSWORD
+);
 // mongoose
 //   // .connect(process.env.DATABASE_LOCAL,{
-  //   .connect(DB, {
-    //     useNewUrlParser: true,
-    //     useCreateIndex: true,
-    //     useFindAndModify: false,
-    //   })
-    //   .then((con) => {
-      //     // console.log(con.connections)
-      //     console.log('DB connected successfully!!...');
-      //   });
+//     .connect(DB, {
+//         useNewUrlParser: true,
+//         useCreateIndex: true,
+//         useFindAndModify: false,
+//       })
+//       .then((con) => {
+//           // console.log(con.connections)
+//           console.log('DB connected successfully!!...');
+//         });
       
-      const DB = 'mongodb+srv://mihirpatel:Admin123@cluster0.qrlmtn5.mongodb.net/WorkBookDemo?retryWrites=true&w=majority'
+      // const DB = 'mongodb+srv://mihirpatel:Admin123@cluster0.qrlmtn5.mongodb.net/WorkBookDemo?retryWrites=true&w=majority'
       console.log("DB : ", DB);
 mongoose
   .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
