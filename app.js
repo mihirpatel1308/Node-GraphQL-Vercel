@@ -15,7 +15,7 @@ dotenv.config({ path: "./config.env" });
 const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
   process.env.DATABASE_PASSWORD
-);
+); 
 // const DB = 'mongodb+srv://mihirpatel:Admin123@cluster0.qrlmtn5.mongodb.net/WorkBookDemo?retryWrites=true&w=majority'
 console.log("DB : ", DB);
 mongoose
