@@ -8,10 +8,6 @@ var indexRouter = require("./routes/index");
 var bookRouter = require("./routes/book");
 var mongoose = require("mongoose");
 
-// var path = require('path');
-// var cookieParser = require('cookie-parser');
-// var logger = require('morgan');
-
 var app = express();
 
 dotenv.config({ path: "./config.env" });
@@ -20,40 +16,13 @@ const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
   process.env.DATABASE_PASSWORD
 );
-// mongoose
-//   // .connect(process.env.DATABASE_LOCAL,{
-//     .connect(DB, {
-//         useNewUrlParser: true,
-//         useCreateIndex: true,
-//         useFindAndModify: false,
-//       })
-//       .then((con) => {
-//           // console.log(con.connections)
-//           console.log('DB connected successfully!!...');
-//         });
-      
-      // const DB = 'mongodb+srv://mihirpatel:Admin123@cluster0.qrlmtn5.mongodb.net/WorkBookDemo?retryWrites=true&w=majority'
-      console.log("DB : ", DB);
+// const DB = 'mongodb+srv://mihirpatel:Admin123@cluster0.qrlmtn5.mongodb.net/WorkBookDemo?retryWrites=true&w=majority'
+console.log("DB : ", DB);
 mongoose
   .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB"))
   .catch((error) => console.error("Error connecting to MongoDB:", error));
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-
-// app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-
-// app.use(
-//   cors({
-//     origin: "*",
-//   })
-// );
 app.use(
   "*",
   cors({
@@ -92,14 +61,13 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  console.log('error state  : ' , err);
+  console.log("error state  : ", err);
   res.json({
     error: {
-        message: err.message,
-        error: {}
-    }
-
-});
+      message: err.message,
+      error: {},
+    },
+  });
   res.send(err);
   res.render("error");
 });
