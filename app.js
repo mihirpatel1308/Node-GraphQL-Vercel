@@ -7,6 +7,7 @@ var createError = require("http-errors");
 var indexRouter = require("./routes/index");
 var bookRouter = require("./routes/book");
 var mongoose = require("mongoose");
+const tourRouter = require("./routes/tourRoutes");
 
 var app = express();
 
@@ -23,14 +24,19 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((error) => console.error("Error connecting to MongoDB:", error));
 
+app.use(express.json());
 app.use(
   "*",
   cors({
     origin: "*",
   })
 );
+
+// Define routes :
 app.use("/", indexRouter);
 app.use("/books", bookRouter);
+app.use("/books", bookRouter);
+
 app.use(
   "/graphql",
   cors({
@@ -43,9 +49,11 @@ app.use(
   })
 );
 
+app.use("/api/tours", tourRouter);
+
 const port = 3000;
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}/graphql`);
+  console.log(`Server running on http://localhost:${port}`);
 });
 
 // catch 404 and forward to error handler
