@@ -5,9 +5,10 @@ var schema = require("./graphql/bookSchemas");
 var cors = require("cors");
 var createError = require("http-errors");
 var indexRouter = require("./routes/index");
-var bookRouter = require("./routes/book");
+// var bookRouter = require("./routes/book");
 var mongoose = require("mongoose");
 const tourRouter = require("./routes/tourRoutes");
+const checkJwt = require("./middleware/auth");
 
 var app = express();
 
@@ -34,11 +35,12 @@ app.use(
 
 // Define routes :
 app.use("/", indexRouter);
-app.use("/books", bookRouter);
-app.use("/books", bookRouter);
+// app.use("/books", bookRouter);
+// app.use("/books", bookRouter);
 
 app.use(
   "/graphql",
+  checkJwt,
   cors({
     origin: "*",
   }),
