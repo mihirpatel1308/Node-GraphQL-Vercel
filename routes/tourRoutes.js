@@ -1,13 +1,12 @@
 const express = require("express");
+const checkJwt = require("../middleware/auth");
 const tourController = require("./../controllers/tourController");
 
 const router = express.Router();
 
-const checkJwtAsync = require("../middleware/auth");
-
 router
   .route("/")
-  .get(checkJwtAsync, tourController.getAllTours)
+  .get(checkJwt, tourController.getAllTours)
   .post(tourController.createTour);
 
 router
