@@ -34,7 +34,7 @@ const checkJwt = async (req, res, next) => {
           res.status(401).json({ error: "Unauthorized" });
         } else {
           req.user = decoded;
-          console.log("req.user : ", req.user);
+          // console.log("req.user : ", req.user);
           next();
         }
       }

@@ -1,7 +1,8 @@
 const dotenv = require("dotenv");
 var express = require("express");
 var graphqlHTTP = require("express-graphql").graphqlHTTP;
-var schema = require("./graphql/bookSchemas");
+var bookSchema = require("./graphql/bookSchemas");
+var taskLogSchema = require("./graphql/taskLogSchemas");
 var cors = require("cors");
 var createError = require("http-errors");
 var indexRouter = require("./routes/index");
@@ -17,7 +18,7 @@ dotenv.config({ path: "./config.env" });
 const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
   process.env.DATABASE_PASSWORD
-); 
+);
 // const DB = 'mongodb+srv://mihirpatel:Admin123@cluster0.qrlmtn5.mongodb.net/WorkBookDemo?retryWrites=true&w=majority'
 console.log("DB : ", DB);
 mongoose
@@ -45,7 +46,20 @@ app.use(
     origin: "*",
   }),
   graphqlHTTP({
-    schema: schema,
+    schema: bookSchema,
+    rootValue: global,
+    graphiql: true,
+  })
+);
+
+app.use(
+  "/taskLog",
+  checkJwt,
+  cors({
+    origin: "*",
+  }),
+  graphqlHTTP({
+    schema: taskLogSchema,
     rootValue: global,
     graphiql: true,
   })
@@ -63,7 +77,7 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler: 
+// error handler:
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
