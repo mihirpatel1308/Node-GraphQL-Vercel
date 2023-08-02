@@ -9,7 +9,7 @@ var GraphQLInt = require("graphql").GraphQLInt;
 // var GraphQLDate = require("graphql-date");
 var TaskLogModel = require("../models/TaskLog");
 
-  var taskLogType = new GraphQLObjectType({
+var taskLogType = new GraphQLObjectType({
   name: "taskLog",
   fields: function () {
     return {
@@ -89,9 +89,6 @@ var mutation = new GraphQLObjectType({
       addTaskLog: {
         type: taskLogType,
         args: {
-          // id: {
-          //   type: new GraphQLNonNull(GraphQLString),
-          // },
           createdDate: {
             type: new GraphQLNonNull(GraphQLString),
           },
@@ -129,97 +126,92 @@ var mutation = new GraphQLObjectType({
           return newTaskLog;
         },
       },
-      // updateBook: {
-      //   type: taskLogType,
-      //   args: {
-      //     id: {
-      //       name: "id",
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     isbn: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     title: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     author: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     description: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     published_year: {
-      //       type: new GraphQLNonNull(GraphQLInt),
-      //     },
-      //     publisher: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //   },
-      //   resolve(root, params) {
-      //     return TaskLogModel.findByIdAndUpdate(
-      //       params.id,
-      //       {
-      //         isbn: params.isbn,
-      //         title: params.title,
-      //         author: params.author,
-      //         description: params.description,
-      //         published_year: params.published_year,
-      //         publisher: params.publisher,
-      //         updated_date: new Date(),
-      //       },
-      //       function (err) {
-      //         if (err) return next(err);
-      //       }
-      //     );
-      //   },
-      // },
-      // removeBook: {
-      //   type: taskLogType,
-      //   args: {
-      //     id: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //   },
-      //   resolve(root, params) {
-      //     const remBook = TaskLogModel.findByIdAndRemove(params.id).exec();
-      //     if (!remBook) {
-      //       throw new Error("Error");
-      //     }
-      //     return remBook;
-      //   },
-      // },
-      // allBooks: {
-      //   type: taskLogType,
-      //   args: {
-      //     id: {
-      //       name: "id",
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     isbn: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     title: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     author: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     description: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //     published_year: {
-      //       type: new GraphQLNonNull(GraphQLInt),
-      //     },
-      //     publisher: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //   },
-      //   resolve(root, params) {
-      //     return TaskLogModel.find(function (err) {
-      //       if (err) return next(err);
-      //     });
-      //   },
-      // },
+      updateTaskLog: {
+        type: taskLogType,
+        args: {
+          id: {
+            name: "id",
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          createdDate: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          name: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          category: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          startDateTime: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          endDateTime: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          status: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          comments: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          hours: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          updated_date: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+        },
+        async resolve(root, params) {
+         
+          try {
+            const updatedTaskLog = await TaskLogModel.findByIdAndUpdate(
+              params.id,
+              {
+                createdDate: params.createdDate,
+                name: params.name,
+                category: params.category,
+                startDateTime: params.startDateTime,
+                endDateTime: params.endDateTime,
+                status: params.status,
+                comments: params.comments,
+                hours: params.hours,
+                updated_date: new Date(),
+              },
+              { new: true } // To return the updated document
+            ).exec();
+
+            if (!updatedTaskLog) {
+              throw new Error("Task Log not found");
+            }
+
+            return updatedTaskLog;
+          } catch (err) {
+            throw new Error(err.message);
+          }
+        },
+      },
+      removeTaskLog: {
+        type: taskLogType,
+        args: {
+          id: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+        },
+        async resolve(root, params) {
+          console.log("params : ", params);
+          try {
+            const removedTaskLog = await TaskLogModel.findByIdAndRemove(
+              params.id
+            ).exec();
+            if (!removedTaskLog) {
+              throw new Error("Task Log not found");
+            }
+            return removedTaskLog;
+          } catch (err) {
+            throw new Error(err.message);
+          }
+        },
+      },
     };
   },
 });
