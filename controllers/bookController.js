@@ -8,7 +8,6 @@
   
 //   // const features = new APIFeatures(Book.find(), req.query)
 //   // console.log('req.query : ' , req.query);
-//   debugger
 //   console.log('this is called');
 //   const books = await Book.find();
 //   res.status(200).json({

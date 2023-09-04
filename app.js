@@ -3,6 +3,7 @@ var express = require("express");
 var graphqlHTTP = require("express-graphql").graphqlHTTP;
 var bookSchema = require("./graphql/bookSchemas");
 var taskLogSchema = require("./graphql/taskLogSchemas");
+var taskLogHeaderSchema = require("./graphql/taskLogHeaderSchemas");
 var cors = require("cors");
 var createError = require("http-errors");
 var indexRouter = require("./routes/index");
@@ -62,6 +63,19 @@ app.use(
     schema: taskLogSchema,
     rootValue: global,
     graphiql: true,
+  })
+);
+
+app.use(
+  "/taskLogHeaders",
+  checkJwt,
+  cors({
+    origin: "*",
+  }),
+  graphqlHTTP({
+    schema: taskLogHeaderSchema,
+    rootValue: global,
+    graphql: true,
   })
 );
 
