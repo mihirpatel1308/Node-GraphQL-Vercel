@@ -243,28 +243,26 @@ var mutation = new GraphQLObjectType({
           }
         },
       },
-      // removeTaskLog: {
-      //   type: taskLogHeadersType,
-      //   args: {
-      //     id: {
-      //       type: new GraphQLNonNull(GraphQLString),
-      //     },
-      //   },
-      //   async resolve(root, params) {
-      //     console.log("params : ", params);
-      //     try {
-      //       const removedTaskLog = await TaskLogModel.findByIdAndRemove(
-      //         params.id
-      //       ).exec();
-      //       if (!removedTaskLog) {
-      //         throw new Error("Task Log not found");
-      //       }
-      //       return removedTaskLog;
-      //     } catch (err) {
-      //       throw new Error(err.message);
-      //     }
-      //   },
-      // },
+      removeTaskLogHeader: {
+        type: taskLogHeadersType,
+        args: {
+          id: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+        },
+        async resolve(root, params) {
+          try {
+            const removedTaskLogHeader =
+              await TaskLogHeadersModel.findByIdAndRemove(params.id).exec();
+            if (!removedTaskLogHeader) {
+              throw new Error("Task Log not found");
+            }
+            return removedTaskLogHeader;
+          } catch (err) {
+            throw new Error(err.message);
+          }
+        },
+      },
     };
   },
 });
