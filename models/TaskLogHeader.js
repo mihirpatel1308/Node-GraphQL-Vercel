@@ -4,14 +4,18 @@ var mongoose = require("mongoose");
 var TaskLogHeaderSchema = new mongoose.Schema({
   id: String,
   columnName: String,
-  columnType: String,
+  columnTypeName: String,
+  columnTypeId: Number,
   isEditable: Boolean,
   isHideInView: Boolean,
   isDeletable: Boolean,
   isSortingAvailable: Boolean,
+  isSortingApply: Boolean,
   isFreezeUpToColumn: Boolean,
   isColumnWrap: Boolean,
-  sortingProperty: Array
+  sortingProperty: Array,
+  createdDate: String,
+  updatedDate: String
 });
 
 
